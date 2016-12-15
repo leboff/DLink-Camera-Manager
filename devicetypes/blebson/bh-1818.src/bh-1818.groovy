@@ -179,100 +179,100 @@ metadata {
 
 def parse(String description) {
     log.debug "Parsing ${description}"
-if( description != "updated" ){
-    def map = [:]
-	def retResult = []
-	def descMap = parseDescriptionAsMap(description)
-    def msg = parseLanMessage(description)
-    //log.debug "status ${msg.status}"
-    //log.debug "data ${msg.data}"
-    
-	//Image
-	if (descMap["bucket"] && descMap["key"]) {
-		putImageInS3(descMap)
-	}      
-    else if (descMap["headers"] && descMap["body"]){
-    	def body = new String(descMap["body"].decodeBase64())
-        log.debug "Body: ${body}"
-    }
+    if( description != "updated" ){
+     //    def map = [:]
+    	// def retResult = []
+    	// def descMap = parseDescriptionAsMap(description)
+     //    def msg = parseLanMessage(description)
+     //    //log.debug "status ${msg.status}"
+     //    //log.debug "data ${msg.data}"
         
-    if (msg.body) {
-    
-    //log.debug "Video Recording Enabled: ${msg.body.contains("<record>\n<enable>1</enable>")}"
-    //log.debug "Video Recording Disabled: ${msg.body.contains("<record>\n<enable>0</enable>")}"
-    //log.debug "Motion Enabled: ${msg.body.contains("enable=yes")}"
-    //log.debug "Motion Disabled: ${msg.body.contains("enable=no")}"
-    //log.debug "PIR Enabled: ${msg.body.contains("pir=yes")}"
-    //log.debug "PIR Disabled: ${msg.body.contains("pir=no")}"
-    
-        if (msg.body.contains("enable=yes")) {
-            log.debug "Motion is on"
-            sendEvent(name: "switch", value: "on");
-        }
-        else if (msg.body.contains("enable=no")) {
-            log.debug "Motion is off"
-            sendEvent(name: "switch", value: "off");
-        }
-        if (msg.body.contains("pir=yes"))
-        {
-        	log.debug "PIR is on"
-        	sendEvent(name: "switch2", value: "on");
-        }
-        else if (msg.body.contains("pir=no"))
-        {
-        	log.debug "PIR is off"
-        	sendEvent(name: "switch2", value: "off");
-        }
-        if(msg.body.contains("sensitivity="))
-        {
-        	//log.debug msg.body        
-        	String[] lines = msg.body.split( '\n' )
-        	//log.debug lines[2]
-            String[] sensitivity = lines[2].split( '=' )
-            //log.debug sensitivity[1]
-            int[] senseValue = sensitivity[1].toInteger()
-            //log.debug senseValue
+    	// //Image
+    	// if (descMap["bucket"] && descMap["key"]) {
+    	// 	putImageInS3(descMap)
+    	// }      
+     //    else if (descMap["headers"] && descMap["body"]){
+     //    	def body = new String(descMap["body"].decodeBase64())
+     //        log.debug "Body: ${body}"
+     //    }
             
-            sendEvent(name: "level",  value: "${senseValue[0]}")
-            //sendEvent(name: "switch.setLevel", value: "${senseValue}")
-        }       
+     //    if (msg.body) {
         
-        if (msg.body.contains( "mode=night")) {
-            log.debug "Night Vision is on"
-            sendEvent(name: "switch3", value: "on");
-        }
-        else if (msg.body.contains("mode=day")) {
-            log.debug "Night Vision is off"
-            sendEvent(name: "switch3", value: "off");
-        }
-        else if (msg.body.contains("mode=auto")) {
-            log.debug "Night Vision is auto"
-            sendEvent(name: "switch3", value: "auto");
-        }
+     //    //log.debug "Video Recording Enabled: ${msg.body.contains("<record>\n<enable>1</enable>")}"
+     //    //log.debug "Video Recording Disabled: ${msg.body.contains("<record>\n<enable>0</enable>")}"
+     //    //log.debug "Motion Enabled: ${msg.body.contains("enable=yes")}"
+     //    //log.debug "Motion Disabled: ${msg.body.contains("enable=no")}"
+     //    //log.debug "PIR Enabled: ${msg.body.contains("pir=yes")}"
+     //    //log.debug "PIR Disabled: ${msg.body.contains("pir=no")}"
         
-        if (msg.body.contains("<record><enable>0</enable>")) {
-        	log.debug "Video Recording Disabled"
-            sendEvent(name: "switch4", value: "off");
-        }
-        else if (msg.body.contains("<record><enable>1</enable>")) {
-        	log.debug "Video Recording Enabled"
-            sendEvent(name: "switch4", value: "on");
-        }    
-        
-        if (msg.body.contains("<code>ok</code>") & !msg.body.contains("<record><enable>0</enable>") & !msg.body.contains("<record><enable>1</enable>")) {
-        	log.debug "Camera has moved."
-            sendEvent(name: "switch6", value: "down");
-            sendEvent(name: "switch6", value: "up");
-            sendEvent(name: "switch6", value: "left");
-            sendEvent(name: "switch6", value: "right");
-            sendEvent(name: "switch6", value: "presetOne");
-            sendEvent(name: "switch6", value: "presetTwo");
-            sendEvent(name: "switch6", value: "presetThree");
-            sendEvent(name: "switch6", value: "home");
-       }    
-    }    
-    device.deviceNetworkId = "ID_WILL_BE_CHANGED_AT_RUNTIME_" + (Math.abs(new Random().nextInt()) % 99999 + 1)
-}
+     //        if (msg.body.contains("enable=yes")) {
+     //            log.debug "Motion is on"
+     //            sendEvent(name: "switch", value: "on");
+     //        }
+     //        else if (msg.body.contains("enable=no")) {
+     //            log.debug "Motion is off"
+     //            sendEvent(name: "switch", value: "off");
+     //        }
+     //        if (msg.body.contains("pir=yes"))
+     //        {
+     //        	log.debug "PIR is on"
+     //        	sendEvent(name: "switch2", value: "on");
+     //        }
+     //        else if (msg.body.contains("pir=no"))
+     //        {
+     //        	log.debug "PIR is off"
+     //        	sendEvent(name: "switch2", value: "off");
+     //        }
+     //        if(msg.body.contains("sensitivity="))
+     //        {
+     //        	//log.debug msg.body        
+     //        	String[] lines = msg.body.split( '\n' )
+     //        	//log.debug lines[2]
+     //            String[] sensitivity = lines[2].split( '=' )
+     //            //log.debug sensitivity[1]
+     //            int[] senseValue = sensitivity[1].toInteger()
+     //            //log.debug senseValue
+                
+     //            sendEvent(name: "level",  value: "${senseValue[0]}")
+     //            //sendEvent(name: "switch.setLevel", value: "${senseValue}")
+     //        }       
+            
+     //        if (msg.body.contains( "mode=night")) {
+     //            log.debug "Night Vision is on"
+     //            sendEvent(name: "switch3", value: "on");
+     //        }
+     //        else if (msg.body.contains("mode=day")) {
+     //            log.debug "Night Vision is off"
+     //            sendEvent(name: "switch3", value: "off");
+     //        }
+     //        else if (msg.body.contains("mode=auto")) {
+     //            log.debug "Night Vision is auto"
+     //            sendEvent(name: "switch3", value: "auto");
+     //        }
+            
+     //        if (msg.body.contains("<record><enable>0</enable>")) {
+     //        	log.debug "Video Recording Disabled"
+     //            sendEvent(name: "switch4", value: "off");
+     //        }
+     //        else if (msg.body.contains("<record><enable>1</enable>")) {
+     //        	log.debug "Video Recording Enabled"
+     //            sendEvent(name: "switch4", value: "on");
+     //        }    
+            
+     //        if (msg.body.contains("<code>ok</code>") & !msg.body.contains("<record><enable>0</enable>") & !msg.body.contains("<record><enable>1</enable>")) {
+     //        	log.debug "Camera has moved."
+     //            sendEvent(name: "switch6", value: "down");
+     //            sendEvent(name: "switch6", value: "up");
+     //            sendEvent(name: "switch6", value: "left");
+     //            sendEvent(name: "switch6", value: "right");
+     //            sendEvent(name: "switch6", value: "presetOne");
+     //            sendEvent(name: "switch6", value: "presetTwo");
+     //            sendEvent(name: "switch6", value: "presetThree");
+     //            sendEvent(name: "switch6", value: "home");
+     //       }    
+     //    }    
+        device.deviceNetworkId = "ID_WILL_BE_CHANGED_AT_RUNTIME_" + (Math.abs(new Random().nextInt()) % 99999 + 1)
+    }
 }
 
 // handle commands
@@ -571,58 +571,66 @@ private getHostAddress() {
 
 def on() {
 	log.debug "Enabling motion detection"
+    sendEvent(name: "switch", value: "on");
     return motionCmd(1, "enable")    
     
 }
 
 def off() {
 	log.debug "Disabling motion detection"
+    sendEvent(name: "switch", value: "off");
     return motionCmd(0, "enable")    
     
 }
 def pirOn() {
 	log.debug "Enabling PIR Sensor"
+    sendEvent(name: "switch2", value: "on");
     return motionCmd(1, "pir")  
     
 }
 
 def pirOff() {
 	log.debug "Disabling PIR Sensor"
+    sendEvent(name: "switch2", value: "off");
     return motionCmd(0, "pir") 
     
 }
 
 def setLevel(percent) {
 	log.debug "Executing 'setLevel'"
+    sendEvent(name: "level",  value: "${percent}")
 	return sensitivityCmd(percent)	
     
 }
 def nvOn() {
 	log.debug "Enabling Night Vision"
+    sendEvent(name: "switch3", value: "on");
     return nightCmd("open")   
     
 }
 
 def nvOff() {
 	log.debug "Disabling Night Vision"
+    sendEvent(name: "switch3", value: "off");
     return nightCmd("close")    
     
 }
 
 def nvAuto() {
 	log.debug "Automatic Night Vision"
+    sendEvent(name: "switch3", value: "auto");
     return nightCmd("auto")    
     
 }
 
 def vrOn() {
 	log.debug "Video Recording On"
-    return videoCmd(1) 
+    //return videoCmd(1) 
 }
 
 def vrOff() {
 	log.debug "Video Recording Off"
-    return videoCmd(0) 
+    //return videoCmd(0) 
 }
 
 def refresh(){
@@ -789,46 +797,54 @@ def homeCmd()
 def up()
 {
 	log.debug "Moving Up"
+    sendEvent(name: "switch6", value: "up");
     moveCmd("up")
 }
 
 def left()
 {
 	log.debug "Moving Left"
+    sendEvent(name: "switch6", value: "left");
     moveCmd("left")
 }
 
 def right()
 {
 	log.debug "Moving Right"
+    sendEvent(name: "switch6", value: "right");
     moveCmd("right")
 }
 
 def down()
 {
 	log.debug "Moving Down"
+    sendEvent(name: "switch6", value: "down");
     moveCmd("down")
 }
 
 def home()
 {
 	log.debug "Moving to Home position"
+    sendEvent(name: "switch6", value: "home");
     homeCmd()
 }
 
 def presetOne()
 {
 	log.debug "Moving to Preset position"
+    sendEvent(name: "switch6", value: "presetOne");
     presetCmd(state.presetOne)
 }
 def presetTwo()
 {
 	log.debug "Moving to Preset position"
+    sendEvent(name: "switch6", value: "presetTwo");
     presetCmd(state.presetTwo)
 }
 def presetThree()
 {
 	log.debug "Moving to Preset position"
+    sendEvent(name: "switch6", value: "presetThree");
     presetCmd(state.presetThree)
 }
 
