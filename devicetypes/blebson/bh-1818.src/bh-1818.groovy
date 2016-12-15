@@ -106,18 +106,10 @@ metadata {
             state "image", label: "Take", action: "Image Capture.take", icon: "st.camera.camera", backgroundColor: "#FFFFFF", nextState:"taking"
         }
 
-        standardTile("refresh", "command.refresh", width: 1, height: 1, inactiveLabel: false) {
-        	state "default", label:'refresh', action:"refresh.refresh", icon:"st.secondary.refresh-icon"        
-    	}
-        standardTile("motion", "device.switch", width: 2, height: 2, canChangeIcon: false) {
+        standardTile("motion", "device.switch", width: 1, height: 1, canChangeIcon: false) {
 			state "off", label: 'Motion Off', action: "switch.on", icon: "st.motion.motion.inactive", backgroundColor: "#ccffcc", nextState: "toggle"
             state "toggle", label:'toggle', action: "", icon: "st.motion.motion.inactive", backgroundColor: "#53a7c0"
 			state "on", label: 'Motion On', action: "switch.off", icon: "st.motion.motion.active", backgroundColor: "#EE0000", nextState: "toggle"            
-		}
-         standardTile("PIR", "device.switch2", width: 2, height: 2, canChangeIcon: false) {
-			state "off", label: 'PIR Off', action: "pirOn", icon: "st.custom.buttons.rec", backgroundColor: "#ccffcc", nextState: "toggle"
-            state "toggle", label:'toggle', action: "", icon: "st.motion.buttons.rec", backgroundColor: "#53a7c0"
-			state "on", label: 'PIR On', action: "pirOff", icon: "st.custom.buttons.rec", backgroundColor: "#EE0000", nextState: "toggle"
 		}
         standardTile("up", "device.switch6", width: 1, height: 1, canChangeIcon: false,  canChangeBackground: false, decoration: "flat") {
 			state "up", label: "", action: "up", icon: "st.samsung.da.oven_ic_up", nextState: "moving"
@@ -151,17 +143,12 @@ metadata {
 			state "presetThree", label: "3", action: "presetThree", nextState: "moving"
             state "moving", label: "moving", action:"", backgroundColor: "#53a7c0"
 		}
-        standardTile("nightVision", "device.switch3", width: 2, height: 2, canChangeIcon: false) {
-			state "off", label: 'NV Off', action: "nvAuto", icon: "st.Weather.weather14", backgroundColor: "#ffff00", nextState: "toggle"
+        standardTile("nightVision", "device.switch3", width: 1, height: 1, canChangeIcon: false) {
+            state "off", label: 'NV Off', action: "nvAuto", icon: "st.Weather.weather14", backgroundColor: "#ffff00", nextState: "toggle"
             state "toggle", label:'toggle', action: "", icon: "st.motion.motion.inactive", backgroundColor: "#53a7c0"
-			state "on", label: 'NV On', action: "nvOff", icon: "st.Weather.weather4", backgroundColor: "#4169E1", nextState: "toggle"  
+            state "on", label: 'NV On', action: "nvOff", icon: "st.Weather.weather4", backgroundColor: "#4169E1", nextState: "toggle"  
             state "auto", label: 'NV Auto', action: "nvOn", icon: "st.motion.motion.active", backgroundColor: "#ccffcc", nextState: "toggle"  
-		}
-        standardTile("Video", "device.switch4", width: 1, height: 1, canChangeIcon: false) {
-			state "off", label: 'Video Off', action: "vrOn", icon: "st.Entertainment.entertainment9", backgroundColor: "#ccffcc", nextState: "toggle"
-            state "toggle", label:'toggle', action: "", icon: "st.Entertainment.entertainment9", backgroundColor: "#53a7c0"
-			state "on", label: 'Video On', action: "vrOff", icon: "st.Entertainment.entertainment9", backgroundColor: "#EE0000", nextState: "toggle"
-		}
+        }
        controlTile("levelSliderControl", "device.level", "slider", height: 1, width: 5, inactiveLabel: false, range:"(0..100)") {
             state "level", action:"switch level.setLevel"
         }
