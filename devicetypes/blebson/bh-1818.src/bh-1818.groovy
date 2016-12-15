@@ -840,8 +840,8 @@ def presetCommand(position) {
 def start() {
 	log.trace "start()"
 	def dataLiveVideo = [
-		OutHomeURL  : "rtsp://${state.cameraUser}:${state.cameraPassword}@${state.videoIP}:${state.videoPort}/live1.sdp",
-		InHomeURL   : "rtsp://${state.cameraUser}:${state.cameraPassword}@${state.videoIP}:${state.videoPort}/live1.sdp",
+		OutHomeURL  : "rtsp://${state.cameraUser}:${state.cameraPassword}@${state.videoIP}:${state.videoPort}/11",
+		InHomeURL   : "rtsp://${state.cameraUser}:${state.cameraPassword}@${state.videoIP}:${state.videoPort}/11",
 		ThumbnailURL: "http://cdn.device-icons.smartthings.com/camera/dlink-indoor@2x.png",
 		cookie      : [key: "key", value: "value"]
 	]
@@ -896,5 +896,5 @@ def configure(){
 }
 
 def getInHomeURL() {
-   [InHomeURL: "rtsp://${state.cameraUser}:${state.cameraPassword}@${state.videoIP}:${state.videoPort}/live1.sdp"]
+   [InHomeURL: "rtsp://${state.cameraUser}:${state.cameraPassword}@${state.videoIP}:${state.videoPort}/11"]
 }
