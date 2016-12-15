@@ -446,7 +446,7 @@ def nightCmd(String attr)
     
     log.debug "The Header is $headers"
     
- def path = "/param.cgi?cmd=setinfrared&-infraredstat=auto"
+ def path = "/param.cgi?cmd=setinfrared&-infraredstat=${attr}"
  log.debug "path is: $path"
   try {
     def hubAction = new physicalgraph.device.HubAction(
@@ -599,13 +599,13 @@ def setLevel(percent) {
 }
 def nvOn() {
 	log.debug "Enabling Night Vision"
-    return nightCmd("night")   
+    return nightCmd("open")   
     
 }
 
 def nvOff() {
 	log.debug "Disabling Night Vision"
-    return nightCmd("day")    
+    return nightCmd("close")    
     
 }
 
