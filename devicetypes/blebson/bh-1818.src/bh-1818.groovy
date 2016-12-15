@@ -2,7 +2,7 @@
  *  Bayit BH-1818 v1.0.1
  *  Image Capture and Video Streaming courtesy Patrick Stuart (patrick@patrickstuart.com)
  *  
- *  Copyright 2015 leboff
+ *  Copyright 2015 blebson
  *
  *  Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
  *  in compliance with the License. You may obtain a copy of the License at:
@@ -15,7 +15,7 @@
  *
  */
 metadata {
-	definition (name: "BH-1818", author: "Bryan Leboff", namespace: "leboff") {
+	definition (name: "BH-1818", author: "Ben Lebson", namespace: "blebson") {
        
         capability "Image Capture"
 	    capability "Sensor"
