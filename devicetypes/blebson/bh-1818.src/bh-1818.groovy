@@ -1,8 +1,8 @@
 /**
- *  D-Link DCS-5029L v1.0.1
+ *  Bayit BH-1818 v1.0.1
  *  Image Capture and Video Streaming courtesy Patrick Stuart (patrick@patrickstuart.com)
  *  
- *  Copyright 2015 blebson
+ *  Copyright 2015 leboff
  *
  *  Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
  *  in compliance with the License. You may obtain a copy of the License at:
@@ -15,7 +15,7 @@
  *
  */
 metadata {
-	definition (name: "DCS-5029L", author: "Ben Lebson", namespace: "blebson") {
+	definition (name: "BH-1818", author: "Bryan Leboff", namespace: "leboff") {
        
         capability "Image Capture"
 	    capability "Sensor"
