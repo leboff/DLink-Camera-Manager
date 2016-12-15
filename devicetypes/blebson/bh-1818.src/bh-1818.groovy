@@ -286,7 +286,7 @@ def take() {
     
     log.debug "The device id configured is: $device.deviceNetworkId"
     
-    def path = "/image/jpeg.cgi" 
+    def path = "/tmpfs/auto.jpg" 
     log.debug "path is: $path"
     
     def headers = [:] 
@@ -334,7 +334,7 @@ def motionCmd(int motion, String attr)
     log.debug "The Header is $headers"
     
     if (motion == 1){
- def path = "/config/motion.cgi?${attr}=yes"
+ def path = "/param.cgi?cmd=setmdattr&-enable=1&-name=1"
  log.debug "path is: $path"
   try {
     def hubAction = new physicalgraph.device.HubAction(
@@ -354,7 +354,7 @@ def motionCmd(int motion, String attr)
   }
   else
   {
-  def path = "/config/motion.cgi?${attr}=no"
+  def path = "/param.cgi?cmd=setmdattr&-enable=0&-name=1"
  log.debug "path is: $path"  
   try {
     def hubAction = new physicalgraph.device.HubAction(
@@ -402,7 +402,7 @@ def sensitivityCmd(int percent)
     
     log.debug "Sensitivity is ${percent} and PIR Sensitivity is ${pir_percent}"
     
-    def path = "/config/motion.cgi?sensitivity=${percent}&pir_sensitivity=${pir_percent}"
+    def path = "/param.cgi?cmd=setmdattr&-s=${percent}&-name=1}"
     log.debug "path is: $path"
         
     def headers = [:] 
@@ -663,7 +663,7 @@ def refresh(){
   
   
 }
-def moveCmd(int moveX, int moveY)
+def moveCmd(String dir)
 {
 	def userpassascii = "${state.cameraUser}:${state.cameraPassword}"
 	def userpass = "Basic " + userpassascii.encodeAsBase64().toString()
@@ -674,7 +674,7 @@ def moveCmd(int moveX, int moveY)
     
     log.debug "The device id configured is: $device.deviceNetworkId"
     
-    def path = "/cgi/ptdc.cgi?command=set_relative_pos&posX=${moveX}&posY=${moveY}"
+    def path = "/ptz${dir}.cgi"
     log.debug "path is: $path"
     
     def headers = [:] 
@@ -715,7 +715,7 @@ def presetCmd(preset)
     
     log.debug "The device id configured is: $device.deviceNetworkId"
     
-    def path = "/cgi/ptdc.cgi?command=goto_preset_position&index=${presetIndex}"
+    def path = "/preset.cgi?-act=goto&-number=${presetIndex}"
     log.debug "path is: $path"
     
     def headers = [:] 
@@ -756,7 +756,7 @@ def homeCmd()
     
     log.debug "The device id configured is: $device.deviceNetworkId"
     
-    def path = "/cgi/ptdc.cgi?command=go_home"
+    def path = "/ptzctrl.cgi?-step=1&-act=home&-speed=45"
     log.debug "path is: $path"
     
     def headers = [:] 
@@ -789,25 +789,25 @@ def homeCmd()
 def up()
 {
 	log.debug "Moving Up"
-    moveCmd(0,5)
+    moveCmd("up")
 }
 
 def left()
 {
 	log.debug "Moving Left"
-    moveCmd(-5,0)
+    moveCmd("left")
 }
 
 def right()
 {
 	log.debug "Moving Right"
-    moveCmd(5,0)
+    moveCmd("right")
 }
 
 def down()
 {
 	log.debug "Moving Down"
-    moveCmd(0,-5)
+    moveCmd("down")
 }
 
 def home()
