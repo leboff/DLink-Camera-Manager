@@ -160,7 +160,7 @@ metadata {
         }
         
         main "motion"
-        details(["videoPlayer", "presetOne", "presetTwo","presetThree", "refresh", "up", "videoStart","cameraDetails", "left", "home", "right", "take", "down", "Video", "levelSliderControl", "Sensitivity", "PIR", "motion", "nightVision", ])
+        details(["videoPlayer", "presetOne", "presetTwo","presetThree",  "motion", "up", "videoStart","cameraDetails", "left", "home", "right", "take", "down", "nightVision", "levelSliderControl", "Sensitivity",  ])
     }
 }
 
